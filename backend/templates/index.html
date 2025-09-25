@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="controls">
+    <div id="authBox">
+        <a href="/login">Login</a> · <a href="/register">Register</a>
+    </div>
+
+    <form id="searchForm">
+        <input id="cardInput" name="card_name" placeholder="Greninja 214/167" required>
+        <select id="regionSelect" name="region">
+            <option value="AU">eBay AU</option>
+            <option value="US">eBay US</option>
+        </select>
+        <button type="submit">Search & Save</button>
+    </form>
+</div>
+
+<section id="resultsGrid" class="grid"></section>
+
+<script src="/static/app.js"></script>
+{% endblock %}

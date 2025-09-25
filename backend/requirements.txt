@@ -1,0 +1,13 @@
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+databases[postgresql]==0.5.7
+SQLAlchemy==1.4.48
+asyncpg==0.27.0
+python-dotenv==1.0.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+aioredis==2.0.1
+fastapi-limiter==0.1.0
+jinja2==3.1.2
+requests==2.31.0
+pydantic==1.10.12

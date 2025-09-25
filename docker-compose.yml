@@ -1,49 +1,35 @@
-version: "3.9"
-
+version: "3.8"
 services:
   backend:
     build: ./backend
-    container_name: pokemon-backend
-    env_file: .env
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5900:5900"
     depends_on:
       - db
       - redis
-    ports:
-      - "8000:8000"
-
-  frontend:
-    build: ./frontend
-    container_name: pokemon-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped
 
   db:
     image: postgres:15
-    container_name: postgres-db
-    restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: pokemon_tracker
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+    restart: always
 
   redis:
     image: redis:7
-    container_name: redis-cache
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    volumes:
+      - redisdata:/data
     restart: always
 
-  nginx:
-    build: ./nginx
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - frontend
-      - backend
-
 volumes:
-  postgres_data:
+  pgdata:
+  redisdata:

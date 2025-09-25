@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Login</h2>
+<form id="loginForm">
+    <input name="username" placeholder="username" required>
+    <input name="password" type="password" placeholder="password" required>
+    <button type="submit">Login</button>
+</form>
+<p id="loginMsg"></p>
+<script>
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(loginForm);
+        const res = await fetch('/token', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.access_token) {
+            localStorage.setItem('jwt', data.access_token);
+            window.location = '/';
+        } else {
+            document.getElementById('loginMsg').textContent = JSON.stringify(data);
+        }
+    });
+</script>
+{% endblock %}
